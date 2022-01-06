@@ -8,7 +8,7 @@ function RenderStaff(staff) {
     const startDate = dateFormat(staff.staff.startDate, "dd/mm/yyyy")
     return (
         <CardGroup>
-            <Card className="btn-linkedin p-2 col-sm-4 col-md-3 col-lg-4" m-0>
+            <Card className="btn-linkedin p-2 col-sm-4 col-md-3 col-lg-4 m-0" >
                 <CardImg src={staff.staff.image} alt={staff.staff.name} />
             </Card>
             <Card className="btn-linkedin p-2">
