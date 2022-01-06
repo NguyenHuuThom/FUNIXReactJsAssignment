@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import { Card, CardText, CardBody, CardTitle, CardImg } from 'reactstrap';
-import dateFormat from "dateformat";
-
+import React from 'react';
+import { Breadcrumb, BreadcrumbItem, Card, CardTitle, CardImg } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 function RenderStaffList({ staff, onClick }) {
     return (
-        <Card onClick={() => onClick(staff.id)}>
-            <CardImg width="100%" src={staff.image} alt={staff.name} />
-            <CardTitle className="text-center m-1" heading="true">{staff.name}</CardTitle>
+        <Card className="btn-linkedin">
+            <Link to={`/staff/${staff.id}`}>
+                <CardImg width="100%" src={staff.image} alt={staff.name} />
+                <CardTitle className="text-center m-1 text-white" heading="true">{staff.name}</CardTitle>
+            </Link>
         </Card>
     )
 }
 
 const Staffs = (props) => {
-    console.log(props);
     const staff = props.staffs.map((staff) => {
         return (
             <div key={staff.id} className="col-12 col-sm-6 col-md-4 col-xl-2 mt-4">
@@ -23,6 +23,11 @@ const Staffs = (props) => {
     });
     return (
         <div className="container">
+            <div className="row">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/staff">Nhân Viên</Link></BreadcrumbItem>
+                </Breadcrumb>
+            </div>
             <div className="row">
                 {staff}
             </div>

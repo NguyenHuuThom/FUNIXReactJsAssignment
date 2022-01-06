@@ -1,15 +1,19 @@
 import { Component } from "react";
-import { Navbar, NavbarBrand } from "reactstrap";
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Staff from './StaffComponent';
+import Header from './HeaderComponent';
+import Footer from "./FooterComponent";
 import StaffInfo from "./StaffInfoComponent";
-import { STAFFS } from '../shared/staffs';
-
+import Salary from "./SalaryComponent";
+import Department from "./DepartmentComponent";
+import { DEPARTMENTS, STAFFS } from '../shared/staffs';
 
 class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            staffs: STAFFS
+            staffs: STAFFS,
+            departments: DEPARTMENTS,
         }
     }
 
@@ -18,15 +22,26 @@ class Main extends Component {
     }
 
     render() {
+
+        const StaffWithId = ({ match }) => {
+            return (
+                <StaffInfo
+                    staff={this.state.staffs.filter((dish) => dish.id === parseInt(match.params.staffId, 10))[0]}
+                />
+            )
+        }
+
         return (
             <div className="App">
-                <Navbar dark color="primary">
-                    <div className="container">
-                        <NavbarBrand href="/">Ứng dụng quản lý nhân sự v1.0</NavbarBrand>
-                    </div>
-                </Navbar>
-                <Staff staffs={this.state.staffs} onClick={(staffId) => this.onStaffSelect(staffId)} />
-                <StaffInfo staff={this.state.staffs.filter((staff) => staff.id === this.state.selectedStaff)[0]} />
+                <Header />
+                <Switch>
+                    <Route path='/staff/:staffId' component={StaffWithId} />
+                    <Route exact path='/staffs' component={() => <Staff staffs={this.state.staffs} />} />
+                    <Route exact path='/departments' component={() => <Department departments={this.state.departments} />} />
+                    <Route exact path='/salary' component={() => <Salary staffs={this.state.staffs} />} />
+                    <Redirect to="/staffs" />
+                </Switch>
+                <Footer />
             </div>
         );
     }
